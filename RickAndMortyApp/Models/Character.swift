@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Characters: Decodable {
+struct Character: Decodable {
 	let info: Info
 	let results: [Results]
 }
