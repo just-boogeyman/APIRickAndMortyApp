@@ -7,17 +7,23 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-
+class ListViewController: UIViewController {
+	
+	// MARK: - Private Properties
+	private let customView = CustomListView()
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		view.backgroundColor = .cyan
-		view.backgroundColor = .white
+		view.backgroundColor = .gray
 		fetchCharacters()
+	}
+	
+	override func loadView() {
+		view = customView
 	}
 }
 
-private extension ViewController {
+private extension ListViewController {
 	func fetchCharacters() {
 		guard let url = URL(string: RickAndMortyAPI.characters.rawValue) else { return }
 		
@@ -28,8 +34,8 @@ private extension ViewController {
 			}
 			
 			do {
-				let characters = try JSONDecoder().decode(Characters.self, from: data)
-				print(characters)
+				let characters = try JSONDecoder().decode(Character.self, from: data)
+				print(characters.results[0].name)
 			} catch let error {
 				print(error.localizedDescription)
 			}
