@@ -15,10 +15,22 @@ final class ListViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.backgroundColor = .gray
+		pushDetailVC()
 	}
 	
 	override func loadView() {
 		view = customView
+	}
+}
+
+// MARK: - Private Metod
+private extension ListViewController {
+	func pushDetailVC() {
+		customView.action = { [weak self] item in
+			let vc = DetailViewController()
+			vc.configure(with: item)
+			self?.navigationController?.pushViewController(vc, animated: true)
+		}
 	}
 }
 

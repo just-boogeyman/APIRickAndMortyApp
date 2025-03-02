@@ -17,6 +17,8 @@
 		04FE9E402D71C02B00905BE3 /* CustomListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FE9E3F2D71C02B00905BE3 /* CustomListView.swift */; };
 		04FE9E432D71C5F900905BE3 /* CharacterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FE9E422D71C5F900905BE3 /* CharacterCell.swift */; };
 		04FE9E452D7204B000905BE3 /* CustomViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FE9E442D7204B000905BE3 /* CustomViewCell.swift */; };
+		04FE9E472D742F0200905BE3 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FE9E462D742F0200905BE3 /* DetailViewController.swift */; };
+		04FE9E4A2D7434A100905BE3 /* CustomDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FE9E492D7434A100905BE3 /* CustomDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		04FE9E3F2D71C02B00905BE3 /* CustomListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomListView.swift; sourceTree = "<group>"; };
 		04FE9E422D71C5F900905BE3 /* CharacterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterCell.swift; sourceTree = "<group>"; };
 		04FE9E442D7204B000905BE3 /* CustomViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViewCell.swift; sourceTree = "<group>"; };
+		04FE9E462D742F0200905BE3 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		04FE9E492D7434A100905BE3 /* CustomDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,7 +72,6 @@
 				049914392D6E0612001EE560 /* SceneDelegate.swift */,
 				04FE9E362D6F4AAA00905BE3 /* ViewControllers */,
 				04FE9E412D71C5C900905BE3 /* Cells */,
-				04FE9E3E2D71C01600905BE3 /* Views */,
 				04FE9E352D6F4A9200905BE3 /* Services */,
 				04FE9E342D6F4A8700905BE3 /* Models */,
 				049914402D6E0614001EE560 /* Assets.xcassets */,
@@ -97,7 +100,8 @@
 		04FE9E362D6F4AAA00905BE3 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				0499143B2D6E0612001EE560 /* ListViewController.swift */,
+				04FE9E482D742F1E00905BE3 /* ListVC */,
+				04FE9E3E2D71C01600905BE3 /* Views */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -106,6 +110,7 @@
 			isa = PBXGroup;
 			children = (
 				04FE9E3F2D71C02B00905BE3 /* CustomListView.swift */,
+				04FE9E492D7434A100905BE3 /* CustomDetailView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -117,6 +122,15 @@
 				04FE9E442D7204B000905BE3 /* CustomViewCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		04FE9E482D742F1E00905BE3 /* ListVC */ = {
+			isa = PBXGroup;
+			children = (
+				0499143B2D6E0612001EE560 /* ListViewController.swift */,
+				04FE9E462D742F0200905BE3 /* DetailViewController.swift */,
+			);
+			path = ListVC;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -189,7 +203,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04FE9E472D742F0200905BE3 /* DetailViewController.swift in Sources */,
 				04FE9E382D6F4BB400905BE3 /* NetworkManager.swift in Sources */,
+				04FE9E4A2D7434A100905BE3 /* CustomDetailView.swift in Sources */,
 				04FE9E402D71C02B00905BE3 /* CustomListView.swift in Sources */,
 				0499143C2D6E0612001EE560 /* ListViewController.swift in Sources */,
 				04FE9E432D71C5F900905BE3 /* CharacterCell.swift in Sources */,
