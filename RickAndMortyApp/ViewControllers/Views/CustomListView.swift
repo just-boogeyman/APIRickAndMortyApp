@@ -14,6 +14,7 @@ final class CustomListView: UIView {
 	private let networkManager = NetworkManager.shared
 	
 	private var items: [Results] = []
+	var action: ((Results) -> ())?
 	
 	override init(frame: CGRect) {
 		super.init(frame: frame)
@@ -45,7 +46,7 @@ private extension CustomListView {
 		tableView = UITableView(frame: .zero, style: .plain)
 		tableView.register(CharacterCell.self, forCellReuseIdentifier: cellIdentifier)
 		tableView.rowHeight = 120
-//		tableView.delegate = self
+		tableView.delegate = self
 		tableView.dataSource = self
 	}
 }
@@ -81,7 +82,7 @@ private extension CustomListView {
 	}
 }
 
-// MARK: - DataSource
+// MARK: - UITableViewDataSource
 extension CustomListView: UITableViewDataSource {
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		items.count
@@ -97,5 +98,12 @@ extension CustomListView: UITableViewDataSource {
 		cell.configure(with: item)
 		
 		return cell
+	}
+}
+
+// MARK: - UITableViewDelegate
+extension CustomListView: UITableViewDelegate {
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		action?(items[indexPath.row])
 	}
 }
