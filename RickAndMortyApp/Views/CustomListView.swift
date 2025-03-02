@@ -11,11 +11,13 @@ final class CustomListView: UIView {
 	// MARK: - Private Property
 	private var tableView: UITableView!
 	private let cellIdentifier = "cellList"
+	private let networkManager = NetworkManager.shared
 	
 	private var items: [Results] = []
 	
 	override init(frame: CGRect) {
 		super.init(frame: frame)
+		fetchCharacters()
 		setupView()
 	}
 	
@@ -42,11 +44,30 @@ private extension CustomListView {
 	func setupTableView() {
 		tableView = UITableView(frame: .zero, style: .plain)
 		tableView.register(CharacterCell.self, forCellReuseIdentifier: cellIdentifier)
+		tableView.rowHeight = 120
 //		tableView.delegate = self
 		tableView.dataSource = self
 	}
 }
 
+// MARK: - Private Methods
+private extension CustomListView {
+	func fetchCharacters() {
+		networkManager.fetch(Character.self, url: RickAndMortyAPI.characters.rawValue) { [weak self] result in
+			switch result {
+			case .success(let items):
+				self?.items = items.results
+				DispatchQueue.main.async {
+					self?.tableView.reloadData()
+				}
+			case .failure(let error):
+				print(error)
+			}
+		}
+	}
+}
+
+// MARK: - Layout
 private extension CustomListView {
 	func layout() {
 		tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -60,9 +81,10 @@ private extension CustomListView {
 	}
 }
 
+// MARK: - DataSource
 extension CustomListView: UITableViewDataSource {
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		10
+		items.count
 	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -70,6 +92,9 @@ extension CustomListView: UITableViewDataSource {
 			withIdentifier: cellIdentifier,
 			for: indexPath
 		) as? CharacterCell else { return UITableViewCell() }
+		
+		let item = items[indexPath.row]
+		cell.configure(with: item)
 		
 		return cell
 	}

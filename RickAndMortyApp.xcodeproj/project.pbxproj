@@ -66,9 +66,9 @@
 			children = (
 				049914372D6E0612001EE560 /* AppDelegate.swift */,
 				049914392D6E0612001EE560 /* SceneDelegate.swift */,
+				04FE9E362D6F4AAA00905BE3 /* ViewControllers */,
 				04FE9E412D71C5C900905BE3 /* Cells */,
 				04FE9E3E2D71C01600905BE3 /* Views */,
-				04FE9E362D6F4AAA00905BE3 /* ViewControllers */,
 				04FE9E352D6F4A9200905BE3 /* Services */,
 				04FE9E342D6F4A8700905BE3 /* Models */,
 				049914402D6E0614001EE560 /* Assets.xcassets */,
@@ -106,7 +106,6 @@
 			isa = PBXGroup;
 			children = (
 				04FE9E3F2D71C02B00905BE3 /* CustomListView.swift */,
-				04FE9E442D7204B000905BE3 /* CustomViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -115,6 +114,7 @@
 			isa = PBXGroup;
 			children = (
 				04FE9E422D71C5F900905BE3 /* CharacterCell.swift */,
+				04FE9E442D7204B000905BE3 /* CustomViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
