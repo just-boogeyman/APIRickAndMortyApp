@@ -37,7 +37,7 @@ final class CustomDetailView: UIView {
 // MARK: - Setup Views
 private extension CustomDetailView {
 	func setup() {
-		backgroundColor = .white
+		backgroundColor = .darkGray
 		addSubviews()
 		activityIndicator.startAnimating()
 		activityIndicator.hidesWhenStopped = true
@@ -59,7 +59,7 @@ private extension CustomDetailView {
 	
 	func setupContainerView() {
 		containerView.layer.cornerRadius = 20
-		containerView.backgroundColor = .gray
+		containerView.backgroundColor = .lightGray
 	}
 	
 	func setupImage() {
@@ -94,8 +94,8 @@ private extension CustomDetailView {
 	func layout() {
 		NSLayoutConstraint.activate([
 			containerView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20),
-			containerView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
-			containerView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
+			containerView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 24),
+			containerView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -24),
 			containerView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.7),
 			
 			imageView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 40),

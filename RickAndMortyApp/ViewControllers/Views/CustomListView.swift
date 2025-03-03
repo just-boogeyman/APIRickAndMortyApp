@@ -7,77 +7,62 @@
 
 import UIKit
 
-final class CustomListView: UIView {
-	// MARK: - Private Property
-	private var tableView: UITableView!
-	private let cellIdentifier = "cellList"
-	private let networkManager = NetworkManager.shared
+final class CustomListView: UITableView {
 	
+	// MARK: - Private property
+	private let cellIdentifier = "cellList"
 	private var items: [Results] = []
+	
+	// MARK: - Public property
 	var action: ((Results) -> ())?
 	
-	override init(frame: CGRect) {
-		super.init(frame: frame)
-		fetchCharacters()
+	override init(frame: CGRect, style: UITableView.Style) {
+		super.init(frame: frame, style: .plain)
 		setupView()
 	}
-	
 	
 	@available (*, unavailable)
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	// MARK: - Public Func
-	func configure(_ items: [Results]) {
+	// MARK: - Public func
+	func configure(with items: [Results]) {
 		self.items = items
+		self.reloadData()
 	}
 }
 
-// MARK: - Setup View
+// MARK: - Setup view
 private extension CustomListView {
 	func setupView() {
 		setupTableView()
-		addSubview(tableView)
 		layout()
 	}
 	
 	func setupTableView() {
-		tableView = UITableView(frame: .zero, style: .plain)
-		tableView.register(CharacterCell.self, forCellReuseIdentifier: cellIdentifier)
-		tableView.rowHeight = 120
-		tableView.delegate = self
-		tableView.dataSource = self
+		backgroundColor = .darkGray
+		register(CharacterCell.self, forCellReuseIdentifier: cellIdentifier)
+		rowHeight = 115
+		separatorStyle = .none
+		delegate = self
+		dataSource = self
 	}
 }
 
-// MARK: - Private Methods
+// MARK: - Private methods
 private extension CustomListView {
-	func fetchCharacters() {
-		networkManager.fetch(Character.self, url: RickAndMortyAPI.characters.rawValue) { [weak self] result in
-			switch result {
-			case .success(let items):
-				self?.items = items.results
-				DispatchQueue.main.async {
-					self?.tableView.reloadData()
-				}
-			case .failure(let error):
-				print(error)
-			}
-		}
-	}
+
 }
 
 // MARK: - Layout
 private extension CustomListView {
 	func layout() {
-		tableView.translatesAutoresizingMaskIntoConstraints = false
-		
 		NSLayoutConstraint.activate([
-			tableView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
-			tableView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
-			tableView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-			tableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
+			leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
+			trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
+			topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+			bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
 		])
 	}
 }
@@ -104,6 +89,7 @@ extension CustomListView: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension CustomListView: UITableViewDelegate {
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		deselectRow(at: indexPath, animated: true)
 		action?(items[indexPath.row])
 	}
 }
