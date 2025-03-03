@@ -28,7 +28,7 @@ final class CharacterCell: UITableViewCell {
 
 private extension CharacterCell {
 	func setup() {
-		backgroundColor = .gray
+		backgroundColor = .darkGray
 		addSubview(customView)
 		layout()
 	}

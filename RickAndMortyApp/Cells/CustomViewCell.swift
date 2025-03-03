@@ -10,10 +10,15 @@ import UIKit
 final class CustomViewCell: UIView {
 	
 	// MARK: - Private Property
-	private let nameLabel = UILabel()
+	private let networkManager = NetworkManager.shared
+	
+	private let nameLabel = CustomLabel(
+		font: Constants.fontLabel,
+		size: Constants.sizeNameLabel
+	)
 	private let imageView = UIImageView()
 	private let activityIndicator = UIActivityIndicatorView()
-	private let networkManager = NetworkManager.shared
+	private let statusView = UIView()
 	
 	
 	override init(frame: CGRect) {
@@ -42,11 +47,12 @@ private extension CustomViewCell {
 		addView()
 		setupImage()
 		setupLabel()
+		setupStatus()
 		layout()
 	}
 	
 	func addView() {
-		[nameLabel, imageView].forEach {
+		[nameLabel, imageView, statusView].forEach {
 			addSubview($0)
 			$0.translatesAutoresizingMaskIntoConstraints = false
 		}
@@ -61,7 +67,15 @@ private extension CustomViewCell {
 	}
 	
 	func setupLabel() {
-//		nameLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
+		nameLabel.textAlignment = .left
+		nameLabel.numberOfLines = 0
+	}
+	
+	func setupStatus() {
+		statusView.backgroundColor = .green
+		statusView.widthAnchor.constraint(equalToConstant: 14).isActive = true
+		statusView.heightAnchor.constraint(equalToConstant: 14).isActive = true
+		statusView.layer.cornerRadius = 7
 	}
 }
 
@@ -84,18 +98,29 @@ private extension CustomViewCell {
 private extension CustomViewCell {
 	func layout() {
 		NSLayoutConstraint.activate([
-			imageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-			imageView.topAnchor.constraint(equalTo: topAnchor, constant: 8),
-			imageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
-			imageView.widthAnchor.constraint(equalToConstant: 80),
+			imageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 4),
+			imageView.topAnchor.constraint(equalTo: topAnchor, constant: 4),
+			imageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -4),
+			imageView.widthAnchor.constraint(equalTo: heightAnchor, multiplier: 0.9),
 			
 			nameLabel.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 8),
 			nameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 8),
-			nameLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
-			nameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+			nameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
+			
+			statusView.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 14),
+			statusView.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 12),
 			
 			activityIndicator.centerYAnchor.constraint(equalTo: imageView.centerYAnchor),
 			activityIndicator.centerXAnchor.constraint(equalTo: imageView.centerXAnchor)
 		])
+	}
+}
+
+
+// MARK: - Constants
+private extension CustomViewCell {
+	enum Constants {
+		static let fontLabel = "Arial Rounded MT Bold"
+		static let sizeNameLabel: CGFloat = 20
 	}
 }

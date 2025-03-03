@@ -16,9 +16,33 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		
 		guard let windowScene = scene as? UIWindowScene else { return }
 		window = UIWindow(windowScene: windowScene)
-		let vc = ListViewController()
-		window?.rootViewController = UINavigationController(rootViewController: vc)
+		let navVC = getTabBarController()
+		window?.rootViewController = navVC
 		window?.makeKeyAndVisible()
 	}
 }
 
+func getTabBarController() -> UINavigationController {
+	let vc = ListViewController()
+	let navController = UINavigationController(rootViewController: vc)
+	navController.navigationBar.prefersLargeTitles = true
+	
+	let appearance = UINavigationBarAppearance()
+	appearance.configureWithOpaqueBackground()
+	appearance.backgroundColor = .darkGray
+		
+	appearance.titleTextAttributes = [
+		.foregroundColor: UIColor(resource: .background),
+		.font: UIFont.systemFont(ofSize: 18, weight: .bold)
+	]
+	
+	appearance.largeTitleTextAttributes = [
+		.foregroundColor: UIColor(resource: .background),
+		.font: UIFont.systemFont(ofSize: 34, weight: .bold)
+	]
+	
+	navController.navigationBar.standardAppearance = appearance
+	navController.navigationBar.scrollEdgeAppearance = appearance
+	
+	return navController
+}
