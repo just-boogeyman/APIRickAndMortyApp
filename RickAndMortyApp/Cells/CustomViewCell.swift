@@ -6,18 +6,20 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class CustomViewCell: UIView {
-	
+		
 	// MARK: - Private Property
-	private let networkManager = NetworkManager.shared
-	
 	private let nameLabel = CustomLabel(
 		font: Constants.fontLabel,
 		size: Constants.sizeNameLabel
 	)
+	private let statusLabel = CustomLabel(
+		font: Constants.fontLabel,
+		size: Constants.sizeStatusLabel
+	)
 	private let imageView = UIImageView()
-	private let activityIndicator = UIActivityIndicatorView()
 	private let statusView = UIView()
 	
 	
@@ -31,19 +33,19 @@ final class CustomViewCell: UIView {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	func configure(_ item: Results) {
+	func configure(_ item: Character) {
 		nameLabel.text = item.name
-		fetchImage(url: item.image)
+		statusLabel.text = item.status
+		updateStatus(status: item.status)
+		fetchImage(image: item.image)
 	}
 }
 
-// MARK: - Setup View
+// MARK: - Setup Views
 private extension CustomViewCell {
 	func setupView() {
 		backgroundColor = .lightGray
 		layer.cornerRadius = 12
-		activityIndicator.startAnimating()
-		activityIndicator.hidesWhenStopped = true
 		addView()
 		setupImage()
 		setupLabel()
@@ -52,12 +54,10 @@ private extension CustomViewCell {
 	}
 	
 	func addView() {
-		[nameLabel, imageView, statusView].forEach {
+		[nameLabel, imageView, statusView, statusLabel].forEach {
 			addSubview($0)
 			$0.translatesAutoresizingMaskIntoConstraints = false
 		}
-		imageView.addSubview(activityIndicator)
-		activityIndicator.translatesAutoresizingMaskIntoConstraints = false
 	}
 	
 	func setupImage() {
@@ -68,6 +68,7 @@ private extension CustomViewCell {
 	
 	func setupLabel() {
 		nameLabel.textAlignment = .left
+		statusLabel.textAlignment = .left
 		nameLabel.numberOfLines = 0
 	}
 	
@@ -81,16 +82,29 @@ private extension CustomViewCell {
 
 // MARK: - Private Methods
 private extension CustomViewCell {
-	func fetchImage(url: String) {
-		networkManager.fetchImage(from: url) { [weak self] result in
-			switch result {
-			case .success(let imageData):
-				self?.imageView.image = UIImage(data: imageData)
-				self?.activityIndicator.stopAnimating()
-			case .failure(let error):
-				print(error)
-			}
+	func updateStatus(status: String) {
+		switch status {
+		case "Alive":
+			statusView.backgroundColor = .green
+		case "Dead":
+			statusView.backgroundColor = .red
+		default:
+			statusView.backgroundColor = .cyan
 		}
+	}
+	
+	func fetchImage(image: String) {
+		let url = URL(string: image)
+		let processor = ResizingImageProcessor(referenceSize: CGSize(width: 300, height: 300))
+		imageView.kf.indicatorType = .activity
+		imageView.kf.setImage(
+			with: url,
+			options: [
+				.processor(processor),
+				.scaleFactor(UIScreen.main.scale),
+				.transition(.fade(1)),
+				.cacheOriginalImage
+			])
 	}
 }
 
@@ -110,8 +124,9 @@ private extension CustomViewCell {
 			statusView.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 14),
 			statusView.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 12),
 			
-			activityIndicator.centerYAnchor.constraint(equalTo: imageView.centerYAnchor),
-			activityIndicator.centerXAnchor.constraint(equalTo: imageView.centerXAnchor)
+			statusLabel.leadingAnchor.constraint(equalTo: statusView.trailingAnchor, constant: 8),
+			statusLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 12),
+			statusLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8)
 		])
 	}
 }
@@ -122,5 +137,6 @@ private extension CustomViewCell {
 	enum Constants {
 		static let fontLabel = "Arial Rounded MT Bold"
 		static let sizeNameLabel: CGFloat = 20
+		static let sizeStatusLabel: CGFloat = 12
 	}
 }

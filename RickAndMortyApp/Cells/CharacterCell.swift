@@ -21,7 +21,7 @@ final class CharacterCell: UITableViewCell {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	func configure(with item: Results) {
+	func configure(with item: Character) {
 		customView.configure(item)
 	}
 }

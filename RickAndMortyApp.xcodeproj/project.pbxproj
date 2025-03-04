@@ -8,13 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		04834FFF2D757A90006D51D5 /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04834FFE2D757A90006D51D5 /* CustomLabel.swift */; };
+		048350062D775209006D51D5 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 048350052D775209006D51D5 /* Kingfisher */; };
 		049914382D6E0612001EE560 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049914372D6E0612001EE560 /* AppDelegate.swift */; };
 		0499143A2D6E0612001EE560 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049914392D6E0612001EE560 /* SceneDelegate.swift */; };
 		0499143C2D6E0612001EE560 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0499143B2D6E0612001EE560 /* ListViewController.swift */; };
 		049914412D6E0614001EE560 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 049914402D6E0614001EE560 /* Assets.xcassets */; };
 		049914442D6E0614001EE560 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 049914422D6E0614001EE560 /* LaunchScreen.storyboard */; };
 		04FE9E382D6F4BB400905BE3 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FE9E372D6F4BB400905BE3 /* NetworkManager.swift */; };
-		04FE9E3A2D6F4C6D00905BE3 /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FE9E392D6F4C6D00905BE3 /* Character.swift */; };
+		04FE9E3A2D6F4C6D00905BE3 /* Characters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FE9E392D6F4C6D00905BE3 /* Characters.swift */; };
 		04FE9E402D71C02B00905BE3 /* CustomListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FE9E3F2D71C02B00905BE3 /* CustomListView.swift */; };
 		04FE9E432D71C5F900905BE3 /* CharacterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FE9E422D71C5F900905BE3 /* CharacterCell.swift */; };
 		04FE9E452D7204B000905BE3 /* CustomViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FE9E442D7204B000905BE3 /* CustomViewCell.swift */; };
@@ -32,7 +33,7 @@
 		049914432D6E0614001EE560 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		049914452D6E0614001EE560 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04FE9E372D6F4BB400905BE3 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
-		04FE9E392D6F4C6D00905BE3 /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
+		04FE9E392D6F4C6D00905BE3 /* Characters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Characters.swift; sourceTree = "<group>"; };
 		04FE9E3F2D71C02B00905BE3 /* CustomListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomListView.swift; sourceTree = "<group>"; };
 		04FE9E422D71C5F900905BE3 /* CharacterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterCell.swift; sourceTree = "<group>"; };
 		04FE9E442D7204B000905BE3 /* CustomViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViewCell.swift; sourceTree = "<group>"; };
@@ -45,6 +46,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				048350062D775209006D51D5 /* Kingfisher in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,7 +97,7 @@
 		04FE9E342D6F4A8700905BE3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				04FE9E392D6F4C6D00905BE3 /* Character.swift */,
+				04FE9E392D6F4C6D00905BE3 /* Characters.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -160,6 +162,9 @@
 			dependencies = (
 			);
 			name = RickAndMortyApp;
+			packageProductDependencies = (
+				048350052D775209006D51D5 /* Kingfisher */,
+			);
 			productName = RickAndMortyApp;
 			productReference = 049914342D6E0612001EE560 /* RickAndMortyApp.app */;
 			productType = "com.apple.product-type.application";
@@ -188,6 +193,9 @@
 				Base,
 			);
 			mainGroup = 0499142B2D6E0612001EE560;
+			packageReferences = (
+				048350042D775209006D51D5 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+			);
 			productRefGroup = 049914352D6E0612001EE560 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -223,7 +231,7 @@
 				049914382D6E0612001EE560 /* AppDelegate.swift in Sources */,
 				04FE9E452D7204B000905BE3 /* CustomViewCell.swift in Sources */,
 				0499143A2D6E0612001EE560 /* SceneDelegate.swift in Sources */,
-				04FE9E3A2D6F4C6D00905BE3 /* Character.swift in Sources */,
+				04FE9E3A2D6F4C6D00905BE3 /* Characters.swift in Sources */,
 				04834FFF2D757A90006D51D5 /* CustomLabel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -443,6 +451,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		048350042D775209006D51D5 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.9.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		048350052D775209006D51D5 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 048350042D775209006D51D5 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 0499142C2D6E0612001EE560 /* Project object */;
 }

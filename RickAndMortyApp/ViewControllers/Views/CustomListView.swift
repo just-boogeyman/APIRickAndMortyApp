@@ -9,13 +9,16 @@ import UIKit
 
 final class CustomListView: UITableView {
 	
-	// MARK: - Private property
+	// MARK: - Public Property
+	var action: ((Character) -> ())?
+	var actionRefresh: (() -> ())?
+
+	
+	// MARK: - Private Property
 	private let cellIdentifier = "cellList"
-	private var items: [Results] = []
+	private var items: [Character] = []
 	
-	// MARK: - Public property
-	var action: ((Results) -> ())?
-	
+	// MARK: - Initializers
 	override init(frame: CGRect, style: UITableView.Style) {
 		super.init(frame: frame, style: .plain)
 		setupView()
@@ -26,18 +29,22 @@ final class CustomListView: UITableView {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	// MARK: - Public func
-	func configure(with items: [Results]) {
+	// MARK: - Public Method
+	func configure(with items: [Character]) {
 		self.items = items
 		self.reloadData()
+		if refreshControl != nil {
+			refreshControl?.endRefreshing()
+		}
 	}
 }
 
-// MARK: - Setup view
+// MARK: - Setup views
 private extension CustomListView {
 	func setupView() {
 		setupTableView()
-		layout()
+		setupRefreshControl()
+//		layout()
 	}
 	
 	func setupTableView() {
@@ -48,22 +55,24 @@ private extension CustomListView {
 		delegate = self
 		dataSource = self
 	}
+	
+	func setupRefreshControl() {
+		refreshControl = UIRefreshControl()
+		refreshControl?.tintColor = .systemPurple
+		let attribures: [NSAttributedString.Key: Any] = [
+			.foregroundColor: UIColor.systemPurple,
+			.font: UIFont.systemFont(ofSize: 16)
+		]
+		let attributedTitle = NSAttributedString(string: "Обновление...", attributes: attribures)
+		refreshControl?.attributedTitle = attributedTitle
+		refreshControl?.addTarget(self, action: #selector(chengeRefresh), for: .valueChanged)
+	}
 }
 
 // MARK: - Private methods
 private extension CustomListView {
-
-}
-
-// MARK: - Layout
-private extension CustomListView {
-	func layout() {
-		NSLayoutConstraint.activate([
-			leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
-			trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
-			topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-			bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
-		])
+	@objc private func chengeRefresh() {
+		actionRefresh?()
 	}
 }
 

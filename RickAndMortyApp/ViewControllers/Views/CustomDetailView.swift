@@ -6,17 +6,19 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class CustomDetailView: UIView {
-	
+		
 	// MARK: - Private Property
 	private let containerView = UIView()
 	private let imageView = UIImageView()
-	private let nameLabel = UILabel()
-	private let activityIndicator = UIActivityIndicatorView()
+	private let nameLabel = CustomLabel(
+		font: Constants.fontLabel,
+		size: Constants.sizeNameLabel
+	)
 	
-	private let networkManager = NetworkManager.shared
-	
+	// MARK: - Initializers
 	override init(frame: CGRect) {
 		super.init(frame: frame)
 		setup()
@@ -28,8 +30,8 @@ final class CustomDetailView: UIView {
 	}
 	
 	//MARK: - Configure
-	func configure(with item: Results) {
-		nameLabel.text = item.name
+	func configure(with item: Character) {
+		nameLabel.text = item.description
 		fetchImage(url: item.image)
 	}
 }
@@ -39,8 +41,6 @@ private extension CustomDetailView {
 	func setup() {
 		backgroundColor = .darkGray
 		addSubviews()
-		activityIndicator.startAnimating()
-		activityIndicator.hidesWhenStopped = true
 		setupContainerView()
 		setupImage()
 		setupLabel()
@@ -50,9 +50,7 @@ private extension CustomDetailView {
 	func addSubviews() {
 		addSubview(containerView)
 		[imageView, nameLabel].forEach {containerView.addSubview($0)}
-		imageView.addSubview(activityIndicator)
-		
-		[containerView, imageView, nameLabel, activityIndicator].forEach {
+		[containerView, imageView, nameLabel].forEach {
 			$0.translatesAutoresizingMaskIntoConstraints = false
 		}
 	}
@@ -69,23 +67,26 @@ private extension CustomDetailView {
 	}
 	
 	func setupLabel() {
-		nameLabel.textAlignment = .center
+		nameLabel.textAlignment = .left
 		nameLabel.textColor = .white
+		nameLabel.numberOfLines = 0
 	}
 }
 
 // MARK: - Private Methods
 private extension CustomDetailView {
 	func fetchImage(url: String) {
-		networkManager.fetchImage(from: url) { [weak self] result in
-			switch result {
-			case .success(let imageData):
-				self?.imageView.image = UIImage(data: imageData)
-				self?.activityIndicator.stopAnimating()
-			case .failure(let error):
-				print(error)
-			}
-		}
+		let url = URL(string: url)
+		let processor = ResizingImageProcessor(referenceSize: CGSize(width: 300, height: 300))
+		imageView.kf.indicatorType = .activity
+		imageView.kf.setImage(
+			with: url,
+			options: [
+				.processor(processor),
+				.scaleFactor(UIScreen.main.scale),
+				.transition(.fade(1)),
+				.cacheOriginalImage
+			])
 	}
 }
 
@@ -103,13 +104,18 @@ private extension CustomDetailView {
 			imageView.widthAnchor.constraint(equalTo: containerView.widthAnchor, multiplier: 0.5),
 			imageView.heightAnchor.constraint(equalTo: containerView.widthAnchor, multiplier: 0.5),
 			
-			activityIndicator.centerYAnchor.constraint(equalTo: imageView.centerYAnchor),
-			activityIndicator.centerXAnchor.constraint(equalTo: imageView.centerXAnchor),
-			
 			nameLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 24),
-			nameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-			nameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 16),
-			nameLabel.heightAnchor.constraint(equalToConstant: 40)
+			nameLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+			nameLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
 		])
+	}
+}
+
+// MARK: - Constants
+private extension CustomDetailView {
+	enum Constants {
+		static let fontLabel = "Arial Rounded MT Bold"
+		static let sizeNameLabel: CGFloat = 20
+		static let sizeStatusLabel: CGFloat = 12
 	}
 }
