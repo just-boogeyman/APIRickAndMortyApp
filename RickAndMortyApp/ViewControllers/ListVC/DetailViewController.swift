@@ -9,8 +9,10 @@ import UIKit
 
 final class DetailViewController: UIViewController {
 	
+	// MARK: - Private Properties
 	private let customView = CustomDetailView()
 	
+	// MARK: - Initializers
 	override func viewDidLoad() {
 		super.viewDidLoad()
 	}
@@ -19,7 +21,8 @@ final class DetailViewController: UIViewController {
 		view = customView
 	}
 	
-	func configure(with item: Results) {
+	// MARK: - Configure
+	func configure(with item: Character) {
 		customView.configure(with: item)
 	}
 }

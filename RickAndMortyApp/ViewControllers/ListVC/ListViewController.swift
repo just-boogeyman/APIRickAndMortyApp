@@ -12,14 +12,15 @@ final class ListViewController: UIViewController {
 	private let networkManager = NetworkManager.shared
 	
 	// MARK: - Private Properties
-	private var filteredCharacters: [Results] = []
-	private var items: [Results] = []
+	private var filteredCharacters: [Character] = []
+	private var items: [Character] = []
 	private var searchBarIsEmpty: Bool {
 		guard let text = searchController.searchBar.text else { return false }
 		return text.isEmpty
 	}
 	private var isFiltering: Bool {
-		return searchController.isActive && !searchBarIsEmpty
+		let searchBarScopeIsFiltering = searchController.searchBar.selectedScopeButtonIndex != 0
+		return searchController.isActive && (!searchBarIsEmpty || searchBarScopeIsFiltering)
 	}
 	
 	private let customView = CustomListView()
@@ -29,6 +30,7 @@ final class ListViewController: UIViewController {
 		super.viewDidLoad()
 		setup()
 		pushDetailVC()
+		pressedRefresh()
 	}
 	
 	override func loadView() {
@@ -46,6 +48,7 @@ private extension ListViewController {
 	}
 	
 	func setupSearchController() {
+		// Setup the Search Controller
 		searchController.searchResultsUpdater = self
 		searchController.obscuresBackgroundDuringPresentation = false
 		searchController.searchBar.placeholder = Constants.searchPlaceholder
@@ -54,6 +57,10 @@ private extension ListViewController {
 		searchController.searchBar.searchBarStyle = .minimal
 		navigationItem.searchController = searchController
 		definesPresentationContext = true
+		
+		// Setup the Scope Bar
+		searchController.searchBar.scopeButtonTitles = Constants.allScope
+		searchController.searchBar.delegate = self
 		
 		if let textField = searchController.searchBar.value(forKey: "searchField") as? UITextField {
 			textField.font = UIFont.boldSystemFont(ofSize: 17)
@@ -74,8 +81,17 @@ private extension ListViewController {
 		}
 	}
 	
+	func pressedRefresh() {
+		customView.actionRefresh = {
+			self.fetchCharacters()
+		}
+	}
+	
 	func fetchCharacters() {
-		networkManager.fetch(Character.self, url: RickAndMortyAPI.characters.rawValue) { [weak self] result in
+		networkManager.fetch(
+			Characters.self,
+			url: "https://rickandmortyapi.com/api/character?page=\(Int.random(in: 1...42))"
+		) { [weak self] result in
 			switch result {
 			case .success(let items):
 				self?.items = items.results
@@ -87,19 +103,38 @@ private extension ListViewController {
 	}
 }
 
+// MARK: - UISearchBarDelegate
+extension ListViewController: UISearchBarDelegate {
+	func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+		print("5")
+		filterContentForSearchText(searchBar.text!, scope: searchBar.scopeButtonTitles![selectedScope])
+	}
+}
+
 // MARK: - UISearchResultsUpdating
 extension ListViewController: UISearchResultsUpdating {
 	func updateSearchResults(for searchController: UISearchController) {
-		filterContentForSearchText(searchController.searchBar.text!)
+		let searchBar = searchController.searchBar
+		let scope = searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex]
+		print("1")
+		filterContentForSearchText(searchController.searchBar.text!, scope: scope)
 	}
 	
-	private func filterContentForSearchText(_ searchText: String) {
+	private func filterContentForSearchText(_ searchText: String, scope: String = "All") {
 		if isFiltering {
-			filteredCharacters = items.filter({ (item: Results) -> Bool in
-				return item.name.lowercased().contains(searchText.lowercased())
+			print("2")
+			filteredCharacters = items.filter({ (item: Character) -> Bool in
+				let doesCategoryMatch = (scope == "All") || (item.status == scope)
+				if searchBarIsEmpty {
+					return doesCategoryMatch
+				} else {
+					return doesCategoryMatch && item.name.lowercased().contains(searchText.lowercased())
+				}
 			})
 			customView.configure(with: filteredCharacters)
 		} else {
+			print("3")
+
 			customView.configure(with: items)
 		}
 	}
@@ -110,5 +145,6 @@ extension ListViewController {
 	private enum Constants {
 		static let title = "Rick and Morty"
 		static let searchPlaceholder = "Search"
+		static let allScope = ["All", "Alive", "Dead", "unknown"]
 	}
 }

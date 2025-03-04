@@ -7,9 +7,9 @@
 
 import Foundation
 
-struct Character: Decodable {
+struct Characters: Decodable {
 	let info: Info
-	let results: [Results]
+	let results: [Character]
 }
 
 struct Info: Decodable {
@@ -18,7 +18,7 @@ struct Info: Decodable {
 	let next: String
 }
 
-struct Results: Decodable {
+struct Character: Decodable {
 	let id: Int
 	let name: String
 	let status: String
@@ -26,6 +26,16 @@ struct Results: Decodable {
 	let image: String
 	let location: Location
 	let origin: Location
+	
+	var description: String {
+		"""
+		Name: \(name)
+		Status: \(status)
+		Species: \(species)
+		Origin: \(origin.name)
+		Location: \(location.name)
+		"""
+	}
 }
 
 struct Location: Decodable {
