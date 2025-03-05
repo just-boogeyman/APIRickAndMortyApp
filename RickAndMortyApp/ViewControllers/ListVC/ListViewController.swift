@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class ListViewController: UIViewController {
 	
@@ -37,6 +38,17 @@ final class ListViewController: UIViewController {
 		fetchCharacters()
 		view = customView
 	}
+	
+	@objc func clearCache() {
+		let cache = ImageCache.default
+		cache.clearMemoryCache()
+		cache.clearDiskCache()
+	}
+	
+	@objc func infoApplication() {
+		let infoVC = InfoViewController()
+		present(infoVC, animated: true)
+	}
 }
 
 // MARK: - Setup Views
@@ -45,20 +57,43 @@ private extension ListViewController {
 		view.backgroundColor = .darkGray
 		title = Constants.title
 		setupSearchController()
+		setupScopeBar()
 	}
 	
 	func setupSearchController() {
-		// Setup the Search Controller
 		searchController.searchResultsUpdater = self
 		searchController.obscuresBackgroundDuringPresentation = false
 		searchController.searchBar.placeholder = Constants.searchPlaceholder
 		searchController.searchBar.barTintColor = .white
-		searchController.searchBar.tintColor = .purple
+		searchController.searchBar.tintColor = .systemPurple
 		searchController.searchBar.searchBarStyle = .minimal
+		
+		let buttonTrash = UIBarButtonItem(
+			barButtonSystemItem: .trash,
+			target: self,
+			action: #selector(clearCache)
+		)
+		let buttonInfo = UIBarButtonItem(
+			barButtonSystemItem: .bookmarks,
+			target: self,
+			action: #selector(infoApplication)
+		)
+
+		buttonTrash.tintColor = .systemPurple
+		buttonInfo.tintColor = .systemPurple
+		
+		navigationItem.rightBarButtonItem = buttonTrash
+		navigationItem.leftBarButtonItem = buttonInfo
+		
 		navigationItem.searchController = searchController
 		definesPresentationContext = true
-		
-		// Setup the Scope Bar
+	}
+	
+	func setupScopeBar() {
+		let scopeBarAppearance = UISearchBar.appearance()
+		scopeBarAppearance.setScopeBarButtonTitleTextAttributes(
+			[.foregroundColor: UIColor.gray], for: .normal)
+			   
 		searchController.searchBar.scopeButtonTitles = Constants.allScope
 		searchController.searchBar.delegate = self
 		
@@ -84,6 +119,7 @@ private extension ListViewController {
 	func pressedRefresh() {
 		customView.actionRefresh = {
 			self.fetchCharacters()
+			self.searchController.searchBar.selectedScopeButtonIndex = 0
 		}
 	}
 	
@@ -106,8 +142,14 @@ private extension ListViewController {
 // MARK: - UISearchBarDelegate
 extension ListViewController: UISearchBarDelegate {
 	func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-		print("5")
 		filterContentForSearchText(searchBar.text!, scope: searchBar.scopeButtonTitles![selectedScope])
+	}
+	
+	func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+		if searchController.isActive {
+			searchBar.showsScopeBar = false
+			searchBar.selectedScopeButtonIndex = 0
+		}
 	}
 }
 
@@ -116,13 +158,14 @@ extension ListViewController: UISearchResultsUpdating {
 	func updateSearchResults(for searchController: UISearchController) {
 		let searchBar = searchController.searchBar
 		let scope = searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex]
-		print("1")
+		if searchController.isActive {
+			searchBar.setShowsScope(true, animated: true)
+		}
 		filterContentForSearchText(searchController.searchBar.text!, scope: scope)
 	}
 	
 	private func filterContentForSearchText(_ searchText: String, scope: String = "All") {
 		if isFiltering {
-			print("2")
 			filteredCharacters = items.filter({ (item: Character) -> Bool in
 				let doesCategoryMatch = (scope == "All") || (item.status == scope)
 				if searchBarIsEmpty {
@@ -133,8 +176,6 @@ extension ListViewController: UISearchResultsUpdating {
 			})
 			customView.configure(with: filteredCharacters)
 		} else {
-			print("3")
-
 			customView.configure(with: items)
 		}
 	}

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		04834FFF2D757A90006D51D5 /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04834FFE2D757A90006D51D5 /* CustomLabel.swift */; };
 		048350062D775209006D51D5 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 048350052D775209006D51D5 /* Kingfisher */; };
+		048350082D785B69006D51D5 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048350072D785B69006D51D5 /* InfoViewController.swift */; };
 		049914382D6E0612001EE560 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049914372D6E0612001EE560 /* AppDelegate.swift */; };
 		0499143A2D6E0612001EE560 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049914392D6E0612001EE560 /* SceneDelegate.swift */; };
 		0499143C2D6E0612001EE560 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0499143B2D6E0612001EE560 /* ListViewController.swift */; };
@@ -25,6 +26,7 @@
 
 /* Begin PBXFileReference section */
 		04834FFE2D757A90006D51D5 /* CustomLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
+		048350072D785B69006D51D5 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		049914342D6E0612001EE560 /* RickAndMortyApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RickAndMortyApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		049914372D6E0612001EE560 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		049914392D6E0612001EE560 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 			children = (
 				04FE9E482D742F1E00905BE3 /* ListVC */,
 				04FE9E3E2D71C01600905BE3 /* Views */,
+				048350072D785B69006D51D5 /* InfoViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -232,6 +235,7 @@
 				04FE9E452D7204B000905BE3 /* CustomViewCell.swift in Sources */,
 				0499143A2D6E0612001EE560 /* SceneDelegate.swift in Sources */,
 				04FE9E3A2D6F4C6D00905BE3 /* Characters.swift in Sources */,
+				048350082D785B69006D51D5 /* InfoViewController.swift in Sources */,
 				04834FFF2D757A90006D51D5 /* CustomLabel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

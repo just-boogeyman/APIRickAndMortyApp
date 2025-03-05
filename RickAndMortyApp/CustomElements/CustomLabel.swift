@@ -9,9 +9,9 @@ import UIKit
 
 final class CustomLabel: UILabel {
 		
-	init(font: String, size: CGFloat) {
+	init(font: String, size: CGFloat, color: UIColor = .white) {
 		super.init(frame: .zero)
-		setupLabel(fontName: font, size: size)
+		setupLabel(fontName: font, size: size, color: color)
 	}
 	
 	@available(*, unavailable)
@@ -23,10 +23,10 @@ final class CustomLabel: UILabel {
 
 // MARK: - SetupLabel
 extension CustomLabel {
-	private func setupLabel(fontName: String, size: CGFloat) {
+	private func setupLabel(fontName: String, size: CGFloat, color: UIColor) {
 		font = UIFont(name: fontName, size: size)
-		textColor = .white
-		textAlignment = .center
+		textColor = color
+		textAlignment = .left
 	}
 }
 
