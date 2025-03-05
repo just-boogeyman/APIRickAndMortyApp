@@ -44,7 +44,7 @@ private extension CustomListView {
 	func setupView() {
 		setupTableView()
 		setupRefreshControl()
-//		layout()
+		
 	}
 	
 	func setupTableView() {

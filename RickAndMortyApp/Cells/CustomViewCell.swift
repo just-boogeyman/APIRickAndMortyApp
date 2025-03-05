@@ -137,6 +137,6 @@ private extension CustomViewCell {
 	enum Constants {
 		static let fontLabel = "Arial Rounded MT Bold"
 		static let sizeNameLabel: CGFloat = 20
-		static let sizeStatusLabel: CGFloat = 12
+		static let sizeStatusLabel: CGFloat = 14
 	}
 }
