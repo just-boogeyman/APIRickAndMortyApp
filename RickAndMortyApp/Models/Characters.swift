@@ -26,16 +26,6 @@ struct Character: Decodable {
 	let image: String
 	let location: Location
 	let origin: Location
-	
-	var description: String {
-		"""
-		Name: \(name)
-		Status: \(status)
-		Species: \(species)
-		Origin: \(origin.name)
-		Location: \(location.name)
-		"""
-	}
 }
 
 struct Location: Decodable {

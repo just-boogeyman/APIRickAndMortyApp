@@ -59,11 +59,14 @@ private extension CustomListView {
 	func setupRefreshControl() {
 		refreshControl = UIRefreshControl()
 		refreshControl?.tintColor = .systemPurple
-		let attribures: [NSAttributedString.Key: Any] = [
+		let attributes: [NSAttributedString.Key: Any] = [
 			.foregroundColor: UIColor.systemPurple,
 			.font: UIFont.systemFont(ofSize: 16)
 		]
-		let attributedTitle = NSAttributedString(string: "Обновление...", attributes: attribures)
+		let attributedTitle = NSAttributedString(
+			string: Constants.refreshAttributeString,
+			attributes: attributes
+		)
 		refreshControl?.attributedTitle = attributedTitle
 		refreshControl?.addTarget(self, action: #selector(chengeRefresh), for: .valueChanged)
 	}
@@ -100,5 +103,12 @@ extension CustomListView: UITableViewDelegate {
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		deselectRow(at: indexPath, animated: true)
 		action?(items[indexPath.row])
+	}
+}
+
+// MARK: - Private Constants
+private extension CustomListView {
+	enum Constants {
+		static let refreshAttributeString = "Обновление..."
 	}
 }

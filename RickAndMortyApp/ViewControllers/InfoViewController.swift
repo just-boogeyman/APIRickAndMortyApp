@@ -6,13 +6,14 @@
 //
 
 import UIKit
-class InfoViewController: UIViewController {
-		
-	private let scrollView = UIScrollView()
-	private let contentView = UIView()
-	private let titleLabel = CustomLabel(font: "Arial Rounded MT Bold", size: 16)
-	private let textLabel = CustomLabel(font: "Arial Rounded MT Bold", size: 14)
 
+final class InfoViewController: UIViewController {
+	
+	// MARK: - Lazy Properties
+	private lazy var scrollView = UIScrollView()
+	private lazy var contentView = UIView()
+	private lazy var titleLabel = CustomLabel(font: "Arial Rounded MT Bold", size: 16)
+	private lazy var textLabel = CustomLabel(font: "Arial Rounded MT Bold", size: 14)
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()

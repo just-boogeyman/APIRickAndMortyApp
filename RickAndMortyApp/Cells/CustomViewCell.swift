@@ -10,17 +10,17 @@ import Kingfisher
 
 final class CustomViewCell: UIView {
 		
-	// MARK: - Private Property
-	private let nameLabel = CustomLabel(
+	// MARK: - Lazy Properties
+	private lazy var nameLabel = CustomLabel(
 		font: Constants.fontLabel,
 		size: Constants.sizeNameLabel
 	)
-	private let statusLabel = CustomLabel(
+	private lazy var statusLabel = CustomLabel(
 		font: Constants.fontLabel,
 		size: Constants.sizeStatusLabel
 	)
-	private let imageView = UIImageView()
-	private let statusView = UIView()
+	private lazy var imageView = UIImageView()
+	private lazy var statusView = UIView()
 	
 	
 	override init(frame: CGRect) {
@@ -33,6 +33,7 @@ final class CustomViewCell: UIView {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
+	// MARK: - Public Metods
 	func configure(_ item: Character) {
 		nameLabel.text = item.name
 		statusLabel.text = item.status
