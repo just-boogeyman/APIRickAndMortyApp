@@ -9,8 +9,8 @@ import UIKit
 
 final class DetailViewController: UIViewController {
 	
-	// MARK: - Private Properties
-	private let customView = CustomDetailView()
+	// MARK: - Lazy Properties
+	private lazy var customView = CustomDetailView()
 	
 	// MARK: - Initializers
 	override func viewDidLoad() {

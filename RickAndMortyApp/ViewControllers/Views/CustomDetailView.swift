@@ -10,40 +10,51 @@ import Kingfisher
 
 final class CustomDetailView: UIView {
 		
-	// MARK: - Private Property
-	private let containerView = UIView()
-	private let imageView = UIImageView()
-	private let statusLabel = CustomLabel(
+	// MARK: - Lazy Properties
+	private lazy var containerView = UIView()
+	private lazy var imageView = UIImageView()
+	private lazy var statusLabel = CustomLabel(
 		font: Constants.fontLabel,
 		size: Constants.sizeNameLabel
 	)
-	private let locationLabel = CustomLabel(
+	private lazy var locationLabel = CustomLabel(
 		font: Constants.fontOriginLabel,
 		size: Constants.sizeSmalLabel,
 		color: .darkGray
 	)
-	private let statusLocationLabel = CustomLabel(
+	private lazy var statusLocationLabel = CustomLabel(
 		font: Constants.fontLabel,
 		size: Constants.sizeNameLabel
 	)
 	
-	private let originLabel = CustomLabel(
+	private lazy var originLabel = CustomLabel(
 		font: Constants.fontOriginLabel,
 		size: Constants.sizeSmalLabel,
 		color: .darkGray
 	)
-	private let statusOriginLabel = CustomLabel(
+	private lazy var statusOriginLabel = CustomLabel(
 		font: Constants.fontLabel,
 		size: Constants.sizeNameLabel
 	)
 	
-	private let lineView = UIView()
-	private let circleView = UIView()
+	private lazy var lineView = UIView()
+	private lazy var circleView = UIView()
 	
 	// MARK: - Initializers
 	override init(frame: CGRect) {
 		super.init(frame: frame)
 		setup()
+	}
+	
+	override func layoutSubviews() {
+		super.layoutSubviews()
+//		let shadowPath1 = UIBezierPath(rect: containerView.bounds)
+//		let shadowPath2 = UIBezierPath(rect: circleView.bounds)
+//		let shadowPath3 = UIBezierPath(rect: lineView.bounds)
+//
+//		containerView.layer.shadowPath = shadowPath1.cgPath
+//		circleView.layer.shadowPath = shadowPath2.cgPath
+//		lineView.layer.shadowPath = shadowPath3.cgPath
 	}
 	
 	@available (*, unavailable)

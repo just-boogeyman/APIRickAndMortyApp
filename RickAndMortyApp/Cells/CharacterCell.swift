@@ -9,7 +9,7 @@ import UIKit
 
 final class CharacterCell: UITableViewCell {
 	
-	private let customView = CustomViewCell()
+	private lazy var customView = CustomViewCell()
 	
 	// MARK: - Init
 	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

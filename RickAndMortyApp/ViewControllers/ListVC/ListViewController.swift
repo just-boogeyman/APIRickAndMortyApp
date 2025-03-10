@@ -10,8 +10,6 @@ import Kingfisher
 
 final class ListViewController: UIViewController {
 	
-	private let networkManager = NetworkManager.shared
-	
 	// MARK: - Private Properties
 	private var filteredCharacters: [Character] = []
 	private var items: [Character] = []
@@ -24,9 +22,14 @@ final class ListViewController: UIViewController {
 		return searchController.isActive && (!searchBarIsEmpty || searchBarScopeIsFiltering)
 	}
 	
-	private let customView = CustomListView()
-	private let searchController = UISearchController(searchResultsController: nil)
+	// MARK: - Lazy Properties
+	private lazy var customView = CustomListView()
+	private lazy var searchController = UISearchController(searchResultsController: nil)
+	
+	// MARK: - Private Properties
+	private let networkManager = NetworkManager.shared
 
+	// MARK: - Initializers
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		setup()
@@ -39,10 +42,12 @@ final class ListViewController: UIViewController {
 		view = customView
 	}
 	
+	// MARK: - Action
 	@objc func clearCache() {
 		let cache = ImageCache.default
 		cache.clearMemoryCache()
 		cache.clearDiskCache()
+		cachedAlert()
 	}
 	
 	@objc func infoApplication() {
@@ -116,6 +121,16 @@ private extension ListViewController {
 		}
 	}
 	
+	func cachedAlert() {
+		let alert = UIAlertController(
+			title: Constants.alertTitle,
+			message: Constants.alertMessage,
+			preferredStyle: .alert
+		)
+		alert.addAction(UIAlertAction(title: Constants.alertOk, style: .default))
+		present(alert, animated: true)
+	}
+	
 	func pressedRefresh() {
 		customView.actionRefresh = {
 			self.fetchCharacters()
@@ -187,5 +202,9 @@ extension ListViewController {
 		static let title = "Rick and Morty"
 		static let searchPlaceholder = "Search"
 		static let allScope = ["All", "Alive", "Dead", "unknown"]
+		
+		static let alertTitle = "Cached"
+		static let alertMessage = "Память устройства, очищена!"
+		static let alertOk = "Ok"
 	}
 }
