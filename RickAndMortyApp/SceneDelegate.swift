@@ -16,13 +16,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		
 		guard let windowScene = scene as? UIWindowScene else { return }
 		window = UIWindow(windowScene: windowScene)
-		let navVC = getTabBarController()
+		let navVC = getNavigationController()
 		window?.rootViewController = navVC
 		window?.makeKeyAndVisible()
 	}
 }
 
-func getTabBarController() -> UINavigationController {
+func getNavigationController() -> UINavigationController {
 	let vc = ListViewController()
 	let navController = UINavigationController(rootViewController: vc)
 	navController.navigationBar.prefersLargeTitles = true
